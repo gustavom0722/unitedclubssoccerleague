@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel — Veteranos Soccer League</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:#0b2a5b;
+      --accent:#d4af37;
+      --light:#f9fafb;
+    }
+    body {
+      font-family: Montserrat, Arial, sans-serif;
+      background: var(--light);
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    h1 {
+      font-family: Oswald, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      background: var(--primary);
+      color: white;
+    }
+    section {
+      background: #fff;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      font-family: Oswald, sans-serif;
+      color: var(--primary);
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 6px 0 3px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    button:hover {
+      background: #092046;
+    }
+    .preview {
+      background: #f1f5f9;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel de Administración</h1>
+
+  <!-- Schedule -->
+  <section>
+    <h2>📅 Horario de Partidos</h2>
+    <label>Fecha:</label>
+    <input type="date">
+    <label>Hora:</label>
+    <input type="time">
+    <label>Equipo A:</label>
+    <input type="text" placeholder="Ej. San Lorenzo FC">
+    <label>Equipo B:</label>
+    <input type="text" placeholder="Ej. Monarcas">
+    <label>Campo:</label>
+    <select>
+      <option>Santa Anita Park</option>
+      <option>Milla #1</option>
+      <option>Otro Campo</option>
+    </select>
+    <button>+ Agregar Partido</button>
+    <div class="preview">Partidos agregados aparecerán aquí...</div>
+  </section>
+
+  <!-- Results -->
+  <section>
+    <h2>🏆 Resultados</h2>
+    <label>Equipo A:</label>
+    <input type="text">
+    <label>Goles A:</label>
+    <input type="number">
+    <label>Equipo B:</label>
+    <input type="text">
+    <label>Goles B:</label>
+    <input type="number">
+    <button>+ Agregar Resultado</button>
+    <div class="preview">Resultados agregados aparecerán aquí...</div>
+  </section>
+
+  <!-- Tabla -->
+  <section>
+    <h2>📊 Tabla General</h2>
+    <label>Equipo:</label>
+    <input type="text">
+    <label>PJ:</label><input type="number">
+    <label>G:</label><input type="number">
+    <label>E:</label><input type="number">
+    <label>P:</label><input type="number">
+    <label>GF:</label><input type="number">
+    <label>GC:</label><input type="number">
+    <label>DIF:</label><input type="number">
+    <label>PTS:</label><input type="number">
+    <label>PTS Reales:</label><input type="number">
+    <button>Actualizar Equipo</button>
+    <div class="preview">Vista previa de la tabla aquí...</div>
+  </section>
+
+  <!-- Goleadores -->
+  <section>
+    <h2>⚽ Goleadores</h2>
+    <label>Jugador:</label>
+    <input type="text">
+    <label>Equipo:</label>
+    <input type="text">
+    <label>Goles:</label>
+    <input type="number">
+    <button>+ Agregar Jugador</button>
+    <div class="preview">Lista de goleadores aparecerá aquí...</div>
+  </section>
+
+  <!-- Fields -->
+  <section>
+    <h2>🏟️ Campos</h2>
+    <label>Nombre:</label>
+    <input type="text" placeholder="Ej. Santa Anita Park">
+    <label>Dirección:</label>
+    <input type="text" placeholder="1234 Main St, Santa Ana, CA">
+    <label>Link Google Maps:</label>
+    <input type="url" placeholder="https://goo.gl/maps/...">
+    <button>+ Agregar Campo</button>
+    <div class="preview">Campos guardados aparecerán aquí...</div>
+  </section>
+</body>
+</html>
