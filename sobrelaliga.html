@@ -28,15 +28,10 @@
     .navlinks a{padding:8px 10px;border-radius:8px}
     .navlinks a:hover{background:#f8fafc}
 
-    /* Mobile menu */
-    .menu-toggle{display:none;font-weight:600;font-size:16px;color:var(--primary);cursor:pointer;align-items:center;gap:6px}
-    .menu-toggle span{font-size:22px}
-
-    @media(max-width:768px){
-      .navlinks{display:none;flex-direction:column;gap:12px;background:#fff;position:absolute;top:60px;right:16px;padding:12px 16px;border:1px solid #ddd;border-radius:8px}
-      .navlinks.active{display:flex}
-      .menu-toggle{display:flex}
-    }
+    /* Mobile trigger (row, dropdown like other pages) */
+    .menu-wrapper{display:none;align-items:center;gap:8px}
+    .menu-label{font-family:Oswald, sans-serif;font-size:14px;font-weight:600;color:var(--primary)}
+    .menu-toggle{font-size:22px;font-weight:bold;color:var(--primary);background:none;border:none;cursor:pointer}
 
     /* Content */
     .container{max-width:900px;margin:auto;padding:20px}
@@ -45,6 +40,26 @@
     ul li{margin-bottom:8px;line-height:1.5}
 
     footer{padding:20px 16px;border-top:3px solid var(--accent);text-align:center;color:#64748b;margin-top:40px}
+
+    /* Mobile dropdown (match Inicio size + other pages' layout) */
+    @media(max-width:768px){
+      .navlinks{
+        display:none;
+        flex-direction:column;
+        gap:12px;
+        background:#fff;
+        position:absolute;
+        top:60px;
+        right:16px;
+        padding:12px 16px;
+        border:1px solid var(--accent);
+        border-radius:8px;
+        box-shadow:0 8px 20px rgba(0,0,0,.08);
+      }
+      .navlinks.active{display:flex}
+      .menu-wrapper{display:flex}
+      .brand h1{font-size:18px} /* same as Inicio mobile */
+    }
   </style>
 </head>
 <body>
@@ -52,10 +67,11 @@
   <div class="nav">
     <div class="nav-inner">
       <div class="brand"><h1>United Clubs Soccer League</h1></div>
-      <div class="menu-toggle" onclick="document.querySelector('.navlinks').classList.toggle('active')">
-        <span>☰</span> Menu
+      <div class="menu-wrapper">
+        <div class="menu-label">Menu</div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
       </div>
-      <nav class="navlinks">
+      <nav class="navlinks" id="navLinks">
         <a href="index.html">Inicio</a>
         <a href="tabla.html">Tabla</a>
         <a href="horario.html">Horario de Partidos</a>
@@ -69,12 +85,11 @@
 
   <!-- MAIN CONTENT -->
   <div class="container">
-   <h2>Contacto</h2>
-<p>
-  <strong>Teléfono:</strong> <br>
-  <strong>Dirección:</strong>
-  </a>
-</p>
+    <h2>Contacto</h2>
+    <p>
+      <strong>Teléfono:</strong> <br>
+      <strong>Dirección:</strong>
+    </p>
 
     <h2>Nuestra Misión</h2>
     <p>Promover el fútbol en nuestra comunidad a través de la competencia justa, la disciplina y la unión entre jugadores y equipos. Queremos que cada jornada sea una experiencia positiva para jugadores y aficionados.</p>
@@ -89,10 +104,9 @@
   </div>
 
   <footer>© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</footer>
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('y').textContent=new Date().getFullYear();
+    function toggleMenu(){ document.getElementById('navLinks').classList.toggle('active'); }
+  </script>
 </body>
 </html>
-
-
-
-
