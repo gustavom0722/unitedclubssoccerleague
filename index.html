@@ -160,4 +160,20 @@
   </div>
 
   <!-- HERO / WELCOME -->
-  <section class="hero
+  <section class="hero">
+    <h2 class="welcome-text">Bienvenidos a United Clubs Soccer League</h2>
+    <p>Santa Ana, CA</p>
+  </section>
+
+  <footer>
+    © <span id="y"></span> United Clubs Soccer League — Santa Ana, CA
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
