@@ -32,31 +32,26 @@
     .menu-toggle{font-size:22px;font-weight:bold;color:var(--primary);background:none;border:none;cursor:pointer}
 
     /* CONTENT */
-    main{max-width:1000px;margin:40px auto;padding:0 16px}
-    h2{font-family:Oswald,sans-serif;color:var(--primary);margin-bottom:16px;text-align:center}
+    main{max-width:900px;margin:60px auto;padding:0 16px;text-align:center}
+    h2{font-family:Oswald,sans-serif;color:var(--primary);margin-bottom:16px}
+    p.note{color:#64748b;margin-bottom:18px}
 
-    .card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);padding:16px}
-    .row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .field{display:flex;flex-direction:column;gap:6px}
-    .label{font-weight:600;font-size:13px;color:#334155}
-    input[type="text"],input[type="date"],input[type="time"]{
-      border:1px solid #cbd5e1;border-radius:6px;padding:10px 12px;font-size:14px
+    .btn{
+      display:inline-block;
+      background:var(--primary);
+      color:#fff;
+      font-weight:700;
+      padding:12px 20px;
+      border-radius:8px;
+      border:2px solid var(--accent);
+      transition:transform .06s ease, opacity .2s ease;
     }
+    .btn:hover{opacity:.95}
+    .btn:active{transform:translateY(1px)}
 
-    .teams{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .team-box{border:1px solid #e2e8f0;border-radius:8px;padding:12px}
-    .team-title{font-weight:700;color:var(--primary);margin-bottom:8px}
+    footer{padding:20px 16px;border-top:3px solid var(--accent);text-align:center;color:#64748b;margin-top:60px}
 
-    table{width:100%;border-collapse:collapse;margin-top:8px}
-    th,td{border:1px solid #e2e8f0;padding:8px 6px;text-align:left;font-size:14px}
-    th{background:#f1f5f9;font-weight:600}
-
-    .signatures{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-    .sig-line{height:48px;border:1px dashed #cbd5e1;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:14px}
-
-    footer{padding:20px 16px;border-top:3px solid var(--accent);text-align:center;color:#64748b;margin-top:40px}
-
-    /* Mobile dropdown menu (match other pages) */
+    /* Mobile dropdown menu (match others) */
     @media(max-width:768px){
       .navlinks{
         display:none;
@@ -74,15 +69,6 @@
       .navlinks.active{display:flex}
       .menu-wrapper{display:flex}
       .brand h1{font-size:18px} /* same as Inicio mobile */
-      .row,.teams,.signatures{grid-template-columns:1fr}
-      th,td{font-size:13px}
-    }
-
-    /* Print-friendly tweaks */
-    @media print{
-      .nav, footer { display:none }
-      main{margin:0;padding:0}
-      .card{box-shadow:none;border-color:#94a3b8}
     }
   </style>
 </head>
@@ -109,87 +95,11 @@
 
   <!-- CONTENT -->
   <main>
-    <h2>Cédula de Partido</h2>
+    <h2>Cédula</h2>
+    <p class="note">Descarga o imprime la cédula oficial para llenarla a mano durante el partido.</p>
 
-    <div class="card">
-      <!-- Datos del partido -->
-      <div class="row">
-        <div class="field">
-          <label class="label">Fecha</label>
-          <input type="date" />
-        </div>
-        <div class="field">
-          <label class="label">Hora</label>
-          <input type="time" />
-        </div>
-        <div class="field">
-          <label class="label">Cancha</label>
-          <input type="text" placeholder="Ej. Bomo Koral" />
-        </div>
-        <div class="field">
-          <label class="label">Árbitro</label>
-          <input type="text" placeholder="Nombre del árbitro" />
-        </div>
-      </div>
-
-      <!-- Equipos -->
-      <div class="teams">
-        <div class="team-box">
-          <div class="team-title">Equipo A</div>
-          <table>
-            <thead>
-              <tr><th>#</th><th>Jugador</th><th>Goles</th><th>Tarjetas</th></tr>
-            </thead>
-            <tbody>
-              <!-- 1–11 básicos; agrega más filas si necesitas -->
-              <tr><td>1</td><td></td><td></td><td></td></tr>
-              <tr><td>2</td><td></td><td></td><td></td></tr>
-              <tr><td>3</td><td></td><td></td><td></td></tr>
-              <tr><td>4</td><td></td><td></td><td></td></tr>
-              <tr><td>5</td><td></td><td></td><td></td></tr>
-              <tr><td>6</td><td></td><td></td><td></td></tr>
-              <tr><td>7</td><td></td><td></td><td></td></tr>
-              <tr><td>8</td><td></td><td></td><td></td></tr>
-              <tr><td>9</td><td></td><td></td><td></td></tr>
-              <tr><td>10</td><td></td><td></td><td></td></tr>
-              <tr><td>11</td><td></td><td></td><td></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="team-box">
-          <div class="team-title">Equipo B</div>
-          <table>
-            <thead>
-              <tr><th>#</th><th>Jugador</th><th>Goles</th><th>Tarjetas</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td></td><td></td><td></td></tr>
-              <tr><td>2</td><td></td><td></td><td></td></tr>
-              <tr><td>3</td><td></td><td></td><td></td></tr>
-              <tr><td>4</td><td></td><td></td><td></td></tr>
-              <tr><td>5</td><td></td><td></td><td></td></tr>
-              <tr><td>6</td><td></td><td></td><td></td></tr>
-              <tr><td>7</td><td></td><td></td><td></td></tr>
-              <tr><td>8</td><td></td><td></td><td></td></tr>
-              <tr><td>9</td><td></td><td></td><td></td></tr>
-              <tr><td>10</td><td></td><td></td><td></td></tr>
-              <tr><td>11</td><td></td><td></td><td></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Firmas -->
-      <div class="signatures">
-        <div class="sig-line">Firma DT Equipo A</div>
-        <div class="sig-line">Firma DT Equipo B</div>
-      </div>
-      <div class="signatures">
-        <div class="sig-line">Firma Árbitro</div>
-        <div class="sig-line">Observaciones</div>
-      </div>
-    </div>
+    <!-- Replace the href with the real PDF path when you upload it (e.g., assets/cedula.pdf) -->
+    <a class="btn" href="assets/cedula.pdf" target="_blank" rel="noopener" download>Descargar / Imprimir Cédula (PDF)</a>
   </main>
 
   <footer>© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</footer>
