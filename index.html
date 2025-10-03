@@ -3,110 +3,89 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>United Clubs Soccer League</title>
+  <title>Inicio — United Clubs Soccer League</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
   <style>
-    :root { --primary:#0b2a5b; --accent:#d4af37; --ink:#0f172a; }
+    :root{ --primary:#0b2a5b; --accent:#d4af37; --ink:#0f172a; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:Montserrat,Arial,sans-serif; color:#fff; background:#0b1220; }
 
-    /* Base */
-    html, body { height:100%; }
-    body { margin:0; font-family: Montserrat, Arial, sans-serif; color:var(--ink); background:#0a0a0a; }
-    a { color:inherit; text-decoration:none; }
+    /* Quick fade-in */
+    @keyframes fadeIn { from{ opacity:0; transform:translateY(4px) } to{ opacity:1; transform:translateY(0) } }
+    .fade-fast { animation: fadeIn .4s ease-out both; }
 
-    /* NAVBAR */
-    .nav { position:sticky; top:0; z-index:50; background:#fff; border-bottom:3px solid var(--accent); }
-    .nav-inner { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
-    .brand h1 { font-family:Oswald, sans-serif; margin:0; font-size:26px; color:var(--primary); text-transform:uppercase; letter-spacing:1px; }
-    .navlinks { display:flex; gap:18px; font-weight:600; font-size:14px; }
-    .navlinks a { padding:8px 10px; border-radius:8px; }
-    .navlinks a:hover { background:#f8fafc; }
-    .menu-wrapper { display:none; align-items:center; gap:8px; }
-    .menu-label { font-family:Oswald, sans-serif; font-size:14px; font-weight:600; color:var(--primary); }
-    .menu-toggle { font-size:24px; font-weight:bold; color:var(--primary); background:none; border:none; cursor:pointer; }
+    /* NAV (Inicio can be slightly larger than other pages) */
+    .nav{ position:sticky; top:0; z-index:50; background:#fff; color:#0b2a5b; border-bottom:4px solid var(--accent); }
+    .nav-inner{ max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
+    .brand h1{ font-family:Oswald, sans-serif; letter-spacing:1px; margin:0; font-size:28px; color:var(--primary); text-transform:uppercase; }
+    .navlinks{ display:flex; gap:18px; font-weight:600; font-size:14px; }
+    .navlinks a{ color:#0f172a; padding:8px 10px; border-radius:8px; }
+    .navlinks a:hover{ background:#f1f5f9; }
 
-    /* HERO (video background) */
-    .hero {
-      position:relative; /* not forced to full 100vh so footer can peek if content allows */
-      min-height: 85vh;  /* large but not overwhelming */
-      display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; color:#fff;
-    }
-    .bg-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
-    .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.60)); z-index:-1; }
-    .hero-content { position:relative; padding:0 16px; max-width: 1100px; width: 100%; }
+    /* Mobile menu */
+    .menu-wrapper{ display:none; align-items:center; gap:8px; }
+    .menu-label{ font-family:Oswald, sans-serif; font-size:14px; font-weight:600; color:var(--primary); }
+    .menu-toggle{ font-size:22px; font-weight:bold; color:var(--primary); background:none; border:none; cursor:pointer; }
 
-    /* Fade animations */
-    .welcome { font-family:Poppins, sans-serif; font-size:28px; margin:0 0 8px; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:.25s; }
-    .title   { font-family:Poppins, sans-serif; font-weight:700; margin:0 0 6px; font-size:48px; text-transform:uppercase; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:.9s; }
-    .city    { font-size:20px; margin:0 0 14px; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:1.6s; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    /* HERO */
+    .hero{ position:relative; min-height:calc(100vh - 64px); display:grid; place-items:center; overflow:hidden; }
+    .hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .hero::after{ content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.55)); }
+    .hero-content{ position:relative; z-index:1; max-width:1100px; width:100%; padding:24px; text-align:center; }
+    .intro{ font-weight:700; color:#ffffffcc; margin:0 0 6px; }
+    .title{ font-family:Poppins, sans-serif; font-weight:800; text-transform:uppercase; line-height:1.05; margin:6px 0; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+    .location{ color:#ffffffcc; margin-top:6px; }
 
-    /* Glass Top-8 card */
-    .glass {
-      margin: 10px auto 0;
-      background: rgba(255,255,255,0.12);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.20);
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      max-width: 640px; /* slightly smaller */
-      overflow: hidden;
-      opacity:0; animation:fadeIn 0.8s ease forwards; animation-delay: 1.9s;
-      text-align: left;
-    }
-    .glass-head {
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 8px 10px;
-    }
-    .glass-head h3 { margin:0; font-weight:600; color:rgba(255,255,255,0.95); font-size: 13px; }
-    .glass-head a { font-size:12px; font-weight:600; color:rgba(255,255,255,0.92); text-decoration: underline; text-underline-offset: 3px; }
-    .glass-head a:hover { color:#fff; }
-
-    .glass-wrap { overflow-x:auto; }
-    .glass table { width:100%; border-collapse:collapse; color:rgba(255,255,255,0.95); font-size: 11px; }
-    .glass thead { background: rgba(255,255,255,0.10); }
-    .glass th, .glass td { padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.12); text-align: center; white-space: nowrap; }
-    .glass th { font-weight:600; }
-    .glass td:nth-child(2), .glass th:nth-child(2) { text-align: left; }
+    /* Glass Top-8 card (small, unobtrusive) */
+    .glass{ margin:18px auto 0; max-width:720px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(8px); border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.25); }
+    .glass-header{ display:flex; align-items:center; justify-content:space-between; padding:8px 10px; font-size:12px; }
+    .glass-header a{ color:#fff; text-decoration:underline; text-underline-offset:2px; }
+    .mini-table{ width:100%; border-collapse:collapse; font-size:12px; color:#fff; }
+    .mini-table thead{ background:rgba(255,255,255,.12); }
+    .mini-table th, .mini-table td{ padding:8px 6px; border-bottom:1px solid rgba(255,255,255,.15); text-align:center; white-space:nowrap; }
+    .mini-table td:nth-child(2), .mini-table th:nth-child(2){ text-align:left; }
 
     /* Footer */
-    footer {
-      background:#0b1220; color:#cbd5e1; border-top:3px solid var(--accent);
-      padding:16px; text-align:center;
-    }
-    .footer-inner { max-width:1200px; margin:0 auto; }
-    .copyright { margin:0; }
-    .social { display:flex; gap:16px; justify-content:center; align-items:center; margin-top:8px; }
-    .social a { display:inline-flex; width:28px; height:28px; }
-    .social svg { width:100%; height:100%; fill:#cbd5e1; transition:opacity .2s ease; }
-    .social a:hover svg { opacity:.85; }
+    footer{ background:#0b1220; border-top:4px solid var(--accent); text-align:center; color:#cbd5e1; }
+    .footer-inner{ max-width:1200px; margin:auto; padding:14px 16px; }
+    .socials{ margin-top:8px; display:flex; justify-content:center; gap:14px; }
+    .socials a{ color:#cbd5e1; opacity:.9; }
+    .socials a:hover{ opacity:1; }
 
-    /* Mobile */
+    /* Responsive */
+    @media (max-width: 1024px){
+      .title{ font-size:64px; }
+    }
     @media (max-width: 768px){
-      .brand h1 { font-size:18px; } /* your chosen smaller nav title */
-      .navlinks {
-        display:none; flex-direction:column; gap:8px; background:#fff; padding:8px;
-        position:absolute; top:60px; right:16px; border:1px solid var(--accent); border-radius:6px;
+      .brand h1{ font-size:18px; } /* match other pages' mobile brand size */
+      .navlinks{
+        display:none;
+        flex-direction:column;
+        gap:10px;
+        background:#fff;
+        padding:10px;
+        position:absolute;
+        top:60px;
+        right:16px;
+        border:1px solid var(--accent);
+        border-radius:8px;
+        box-shadow:0 10px 20px rgba(0,0,0,.08);
       }
-      .navlinks.active { display:flex; }
-      .menu-wrapper { display:flex; }
+      .navlinks.active{ display:flex; }
+      .menu-wrapper{ display:flex; }
 
-      .welcome { font-size:18px; }
-      .title { font-size: clamp(18px, 6vw, 26px); white-space: nowrap; } /* fit on one line */
-      .city { font-size:14px; }
-
-      .glass { max-width: 92%; }              /* slightly smaller on mobile */
-      .glass table { font-size: 10px; }       /* tighter font */
-      .glass th, .glass td { padding: 6px; }  /* tighter padding */
-
-      /* Mobile footer option B: inline text + centered icons on next line */
-      .copyright { font-size:12px; line-height:1.2; }
+      .title{ font-size:10vw; } /* scales nicely on phones */
+      .intro{ font-size:16px; }
+      .location{ font-size:14px; }
+      .mini-table{ font-size:11px; }
+      .glass{ max-width:92%; }
     }
-
-    @media (prefers-reduced-motion: reduce){
-      .welcome, .title, .city, .glass { animation: none !important; opacity: 1 !important; }
+    @media (min-width: 769px){
+      .title{ font-size:88px; }
+      .intro{ font-size:20px; }
+      .location{ font-size:16px; }
     }
   </style>
 </head>
@@ -122,7 +101,7 @@
       <nav class="navlinks" id="navLinks">
         <a href="index.html">Inicio</a>
         <a href="tabla.html">Tabla</a>
-        <a href="horario.html">Horario</a>
+        <a href="horario.html">Horario de Partidos</a>
         <a href="resultados.html">Resultados</a>
         <a href="goleadores.html">Goleadores</a>
         <a href="cedula.html">Cédula</a>
@@ -131,25 +110,26 @@
     </div>
   </div>
 
-  <!-- HERO -->
+  <!-- HERO with video background -->
   <section class="hero">
-    <video class="bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg">
-      <source src="assets/hero.mp4" type="video/mp4" />
+    <video autoplay muted loop playsinline
+      poster="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=1600&auto=format&fit=crop">
+      <source src="https://videos.pexels.com/video-files/6133663/6133663-uhd_2560_1440_30fps.mp4" type="video/mp4">
     </video>
 
     <div class="hero-content">
-      <h2 class="welcome">Bienvenidos a</h2>
-      <h1 class="title">United Clubs Soccer League</h1>
-      <p class="city">Santa Ana, CA</p>
+      <p class="intro fade-fast">Bienvenidos a</p>
+      <h2 class="title">United Clubs Soccer League</h2>
+      <p class="location fade-fast">Santa Ana, CA</p>
 
-      <!-- Glass Top-8 (simplified) -->
-      <div class="glass">
-        <div class="glass-head">
-          <h3>Top 8 — Clasificados a Playoffs</h3>
+      <!-- Glass Top-8 (small) -->
+      <div class="glass fade-fast">
+        <div class="glass-header">
+          <strong>Top 8 — Clasificados a Playoffs</strong>
           <a href="tabla.html">Ver tabla completa →</a>
         </div>
-        <div class="glass-wrap">
-          <table>
+        <div style="overflow-x:auto;">
+          <table class="mini-table">
             <thead>
               <tr>
                 <th>POS</th><th>EQUIPO</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>PTS</th>
@@ -168,24 +148,21 @@
           </table>
         </div>
       </div>
-      <!-- /Glass Top-8 -->
     </div>
-
-    <!-- Soft hint into footer -->
-    <div style="position:absolute; left:0; right:0; bottom:0; height:64px; pointer-events:none; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #0b1220 100%);"></div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <p class="copyright">© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</p>
-      <div class="social">
-        <!-- Replace hrefs with your links if not already -->
-        <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM18 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      <p>© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</p>
+      <div class="socials">
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM18 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
         </a>
-        <a href="YOUR_FACEBOOK_URL" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 9H16l.5-3h-3V4.5c0-.9.3-1.5 1.5-1.5H16V0h-2c-2.4 0-4 1.3-4 3.9V6H8v3h2v9h3V9z"/></svg>
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M13.5 9H16l.5-3h-3V4.5c0-.9.3-1.5 1.5-1.5H16V0h-2c-2.4 0-4 1.3-4 3.9V6H8v3h2v9h3V9z"/></svg>
         </a>
       </div>
     </div>
