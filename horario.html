@@ -26,8 +26,12 @@
     .navlinks a { padding:8px 10px; border-radius:8px; }
     .navlinks a:hover { background:#f8fafc; }
 
-    /* Menu wrapper for mobile */
-    .menu-wrapper { display:none; flex-direction:column; align-items:center; gap:2px; }
+    /* Menu wrapper (row, like Inicio) */
+    .menu-wrapper { 
+      display:none; 
+      align-items:center; 
+      gap:8px;        /* side-by-side with spacing */
+    }
     .menu-label { font-family:Oswald, sans-serif; font-size:14px; font-weight:600; color:var(--primary); }
     .menu-toggle { font-size:22px; font-weight:bold; color:var(--primary); background:none; border:none; cursor:pointer; }
 
@@ -46,7 +50,7 @@
 
     footer { padding:20px 16px; border-top:3px solid var(--accent); text-align:center; color:#64748b; margin-top:40px; }
 
-     /* Responsive (match Inicio mobile header) */
+    /* Responsive (match Inicio mobile header) */
     @media (max-width: 768px) {
       .navlinks {
         display:none;
@@ -144,4 +148,3 @@
   </script>
 </body>
 </html>
-
