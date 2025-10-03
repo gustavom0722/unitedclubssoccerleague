@@ -7,45 +7,71 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
-
   <style>
     :root { --primary:#0b2a5b; --accent:#d4af37; --ink:#0f172a; }
 
-    /* Base layout (no flex; hero fills screen so no black gap) */
+    /* Base */
     html, body { height:100%; }
     body { margin:0; font-family: Montserrat, Arial, sans-serif; color:var(--ink); background:#0a0a0a; }
     a { color:inherit; text-decoration:none; }
 
     /* NAVBAR */
     .nav { position:sticky; top:0; z-index:50; background:#fff; border-bottom:3px solid var(--accent); }
-    .nav-inner {
-      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px;
-    }
+    .nav-inner { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
     .brand h1 { font-family:Oswald, sans-serif; margin:0; font-size:26px; color:var(--primary); text-transform:uppercase; letter-spacing:1px; }
     .navlinks { display:flex; gap:18px; font-weight:600; font-size:14px; }
     .navlinks a { padding:8px 10px; border-radius:8px; }
     .navlinks a:hover { background:#f8fafc; }
-
     .menu-wrapper { display:none; align-items:center; gap:8px; }
     .menu-label { font-family:Oswald, sans-serif; font-size:14px; font-weight:600; color:var(--primary); }
     .menu-toggle { font-size:24px; font-weight:bold; color:var(--primary); background:none; border:none; cursor:pointer; }
 
-    /* HERO with VIDEO BACKGROUND (fills viewport -> no blank area) */
+    /* HERO (video background) */
     .hero {
-      position:relative; min-height:100vh;
+      position:relative; /* not forced to full 100vh so footer can peek if content allows */
+      min-height: 85vh;  /* large but not overwhelming */
       display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; color:#fff;
     }
     .bg-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
-    .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.55)); z-index:-1; }
-    .hero-content { position:relative; padding:0 16px; }
+    .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.60)); z-index:-1; }
+    .hero-content { position:relative; padding:0 16px; max-width: 1100px; width: 100%; }
 
-    /* FADE ANIMATIONS */
-    .welcome { font-family:Poppins, sans-serif; font-size:28px; margin:0 0 10px; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:.3s; }
-    .title   { font-family:Poppins, sans-serif; font-weight:700; margin:0 0 8px; font-size:48px; text-transform:uppercase; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:1.0s; }
-    .city    { font-size:20px; margin:0; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:2.0s; }
+    /* Fade animations */
+    .welcome { font-family:Poppins, sans-serif; font-size:28px; margin:0 0 8px; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:.25s; }
+    .title   { font-family:Poppins, sans-serif; font-weight:700; margin:0 0 6px; font-size:48px; text-transform:uppercase; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:.9s; }
+    .city    { font-size:20px; margin:0 0 14px; opacity:0; animation:fadeIn 1s ease forwards; animation-delay:1.6s; }
     @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
-    /* FOOTER (desktop unchanged) */
+    /* Glass Top-8 card */
+    .glass {
+      margin: 10px auto 0;
+      background: rgba(255,255,255,0.12);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      max-width: 640px; /* slightly smaller */
+      overflow: hidden;
+      opacity:0; animation:fadeIn 0.8s ease forwards; animation-delay: 1.9s;
+      text-align: left;
+    }
+    .glass-head {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 8px 10px;
+    }
+    .glass-head h3 { margin:0; font-weight:600; color:rgba(255,255,255,0.95); font-size: 13px; }
+    .glass-head a { font-size:12px; font-weight:600; color:rgba(255,255,255,0.92); text-decoration: underline; text-underline-offset: 3px; }
+    .glass-head a:hover { color:#fff; }
+
+    .glass-wrap { overflow-x:auto; }
+    .glass table { width:100%; border-collapse:collapse; color:rgba(255,255,255,0.95); font-size: 11px; }
+    .glass thead { background: rgba(255,255,255,0.10); }
+    .glass th, .glass td { padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.12); text-align: center; white-space: nowrap; }
+    .glass th { font-weight:600; }
+    .glass td:nth-child(2), .glass th:nth-child(2) { text-align: left; }
+
+    /* Footer */
     footer {
       background:#0b1220; color:#cbd5e1; border-top:3px solid var(--accent);
       padding:16px; text-align:center;
@@ -57,9 +83,9 @@
     .social svg { width:100%; height:100%; fill:#cbd5e1; transition:opacity .2s ease; }
     .social a:hover svg { opacity:.85; }
 
-    /* MOBILE tweaks */
-    @media (max-width:768px){
-      .brand h1 { font-size:18px; } /* header already good */
+    /* Mobile */
+    @media (max-width: 768px){
+      .brand h1 { font-size:18px; } /* your chosen smaller nav title */
       .navlinks {
         display:none; flex-direction:column; gap:8px; background:#fff; padding:8px;
         position:absolute; top:60px; right:16px; border:1px solid var(--accent); border-radius:6px;
@@ -67,19 +93,20 @@
       .navlinks.active { display:flex; }
       .menu-wrapper { display:flex; }
 
-      /* Make league title fit one line */
       .welcome { font-size:18px; }
-      .title   { font-size: clamp(18px, 6vw, 26px); white-space: nowrap; }
-      .city    { font-size:14px; }
+      .title { font-size: clamp(18px, 6vw, 26px); white-space: nowrap; } /* fit on one line */
+      .city { font-size:14px; }
 
-      /* Footer Option B: smaller text + icons centered on second line */
+      .glass { max-width: 92%; }              /* slightly smaller on mobile */
+      .glass table { font-size: 10px; }       /* tighter font */
+      .glass th, .glass td { padding: 6px; }  /* tighter padding */
+
+      /* Mobile footer option B: inline text + centered icons on next line */
       .copyright { font-size:12px; line-height:1.2; }
-      .social { margin-top:10px; }
     }
 
-    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .welcome, .title, .city { animation:none !important; opacity:1 !important; }
+      .welcome, .title, .city, .glass { animation: none !important; opacity: 1 !important; }
     }
   </style>
 </head>
@@ -114,7 +141,38 @@
       <h2 class="welcome">Bienvenidos a</h2>
       <h1 class="title">United Clubs Soccer League</h1>
       <p class="city">Santa Ana, CA</p>
+
+      <!-- Glass Top-8 (simplified) -->
+      <div class="glass">
+        <div class="glass-head">
+          <h3>Top 8 — Clasificados a Playoffs</h3>
+          <a href="tabla.html">Ver tabla completa →</a>
+        </div>
+        <div class="glass-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>POS</th><th>EQUIPO</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>PTS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Equipo A</td><td>10</td><td>8</td><td>1</td><td>1</td><td>25</td></tr>
+              <tr><td>2</td><td>Equipo B</td><td>10</td><td>7</td><td>2</td><td>1</td><td>23</td></tr>
+              <tr><td>3</td><td>Equipo C</td><td>10</td><td>6</td><td>2</td><td>2</td><td>20</td></tr>
+              <tr><td>4</td><td>Equipo D</td><td>10</td><td>6</td><td>1</td><td>3</td><td>19</td></tr>
+              <tr><td>5</td><td>Equipo E</td><td>10</td><td>5</td><td>2</td><td>3</td><td>17</td></tr>
+              <tr><td>6</td><td>Equipo F</td><td>10</td><td>5</td><td>1</td><td>4</td><td>16</td></tr>
+              <tr><td>7</td><td>Equipo G</td><td>10</td><td>4</td><td>2</td><td>4</td><td>14</td></tr>
+              <tr><td>8</td><td>Equipo H</td><td>10</td><td>3</td><td>3</td><td>4</td><td>12</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /Glass Top-8 -->
     </div>
+
+    <!-- Soft hint into footer -->
+    <div style="position:absolute; left:0; right:0; bottom:0; height:64px; pointer-events:none; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #0b1220 100%);"></div>
   </section>
 
   <!-- FOOTER -->
@@ -122,11 +180,11 @@
     <div class="footer-inner">
       <p class="copyright">© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</p>
       <div class="social">
-        <!-- Replace the href values with your real links -->
-        <a href="https://www.instagram.com/unitedclubssoccerleague/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <!-- Replace hrefs with your links if not already -->
+        <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM18 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
         </a>
-        <a href="https://www.facebook.com/unitedclubssoccer/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <a href="YOUR_FACEBOOK_URL" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 9H16l.5-3h-3V4.5c0-.9.3-1.5 1.5-1.5H16V0h-2c-2.4 0-4 1.3-4 3.9V6H8v3h2v9h3V9z"/></svg>
         </a>
       </div>
