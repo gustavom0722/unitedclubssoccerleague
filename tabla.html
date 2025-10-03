@@ -8,29 +8,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary:#0b2a5b;
-      --accent:#d4af37;
-      --ink:#0f172a;
-    }
+    :root { --primary:#0b2a5b; --accent:#d4af37; --ink:#0f172a; }
+
     * { box-sizing: border-box; }
     body { margin:0; font-family: Montserrat, Arial, sans-serif; color: var(--ink); background:#f9fafb; }
     a { color:inherit; text-decoration:none; }
 
-    /* Nav */
+    /* NAV (match Inicio) */
     .nav { position:sticky; top:0; z-index:40; background:#fff; border-bottom:3px solid var(--accent); }
-    .nav-inner { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:8px 16px; }
-    .brand h1 { font-family:Oswald; letter-spacing:1px; margin:0; font-size:24px; color:var(--primary); text-transform:uppercase; }
+    .nav-inner { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
+    .brand h1 { font-family:Oswald, sans-serif; letter-spacing:1px; margin:0; font-size:24px; color:var(--primary); text-transform:uppercase; }
     .navlinks { display:flex; gap:18px; font-weight:600; font-size:14px; }
     .navlinks a { padding:8px 10px; border-radius:8px; }
     .navlinks a:hover { background:#f8fafc; }
 
-    /* Menu wrapper for mobile */
-    .menu-wrapper { display:none; flex-direction:column; align-items:center; gap:2px; }
+    /* Menu wrapper (row, like Inicio) */
+    .menu-wrapper { display:none; align-items:center; gap:8px; }
     .menu-label { font-family:Oswald, sans-serif; font-size:14px; font-weight:600; color:var(--primary); }
     .menu-toggle { font-size:22px; font-weight:bold; color:var(--primary); background:none; border:none; cursor:pointer; }
 
-    /* Table */
+    /* TABLE CARD */
     .standings { max-width:1100px; margin:40px auto; background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); overflow-x:auto; }
     table { width:100%; border-collapse:collapse; font-size:14px; text-align:center; }
     thead { background:var(--primary); color:#fff; }
@@ -38,12 +35,11 @@
     th { font-weight:600; font-size:13px; }
     td:first-child, th:first-child { font-weight:600; }
     td:nth-child(2) { text-align:left; white-space:nowrap; }
-
-    .criteria { text-align:center; margin-top:10px; font-size:13px; color:#64748b; }
+    .criteria { text-align:center; margin:10px auto 0; font-size:13px; color:#64748b; padding:0 12px; }
 
     footer { padding:20px 16px; border-top:3px solid var(--accent); text-align:center; color:#64748b; margin-top:40px; }
 
-    /* Responsive */
+    /* MOBILE (match Inicio) */
     @media (max-width: 768px) {
       .navlinks {
         display:none;
@@ -58,13 +54,9 @@
         border-radius:6px;
       }
       .navlinks.active { display:flex; }
-      .menu-wrapper { display:flex; }
+      .menu-wrapper { display:flex; }        /* row, not stacked */
+      .brand h1 { font-size:18px; }          /* same as Inicio mobile */
       table { font-size:12px; }
-
-      /* ✅ Consistent mobile header font size */
-      .brand h1 {
-        font-size:18px; /* same as Inicio mobile */
-      }
     }
   </style>
 </head>
@@ -95,7 +87,41 @@
     <h2 style="text-align:center; font-family:Poppins, sans-serif; margin:20px 0; color:var(--primary);">Tabla General</h2>
     <p class="criteria">Criterios de desempate: PTS → DIF → GF → Resultados entre equipos (similar a Premier League)</p>
     <table>
-      <!-- table content stays the same -->
+      <thead>
+        <tr>
+          <th>POS</th>
+          <th>EQUIPO</th>
+          <th>PJ</th>
+          <th>G</th>
+          <th>E</th>
+          <th>P</th>
+          <th>GF</th>
+          <th>GC</th>
+          <th>DIF</th>
+          <th>PTS</th>
+          <th>PTS Reales</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Equipo A</td><td>10</td><td>8</td><td>1</td><td>1</td><td>25</td><td>10</td><td>+15</td><td>25</td><td>-</td></tr>
+        <tr><td>2</td><td>Equipo B</td><td>10</td><td>7</td><td>2</td><td>1</td><td>22</td><td>12</td><td>+10</td><td>23</td><td>-</td></tr>
+        <tr><td>3</td><td>Equipo C</td><td>10</td><td>6</td><td>2</td><td>2</td><td>20</td><td>14</td><td>+6</td><td>20</td><td>-</td></tr>
+        <tr><td>4</td><td>Equipo D</td><td>10</td><td>6</td><td>1</td><td>3</td><td>18</td><td>12</td><td>+6</td><td>19</td><td>-</td></tr>
+        <tr><td>5</td><td>Equipo E</td><td>10</td><td>5</td><td>2</td><td>3</td><td>17</td><td>13</td><td>+4</td><td>17</td><td>-</td></tr>
+        <tr><td>6</td><td>Equipo F</td><td>10</td><td>5</td><td>1</td><td>4</td><td>16</td><td>15</td><td>+1</td><td>16</td><td>-</td></tr>
+        <tr><td>7</td><td>Equipo G</td><td>10</td><td>4</td><td>2</td><td>4</td><td>14</td><td>13</td><td>+1</td><td>14</td><td>-</td></tr>
+        <tr><td>8</td><td>Equipo H</td><td>10</td><td>3</td><td>3</td><td>4</td><td>15</td><td>17</td><td>-2</td><td>12</td><td>-</td></tr>
+        <tr><td>9</td><td>Equipo I</td><td>10</td><td>3</td><td>2</td><td>5</td><td>13</td><td>18</td><td>-5</td><td>11</td><td>-</td></tr>
+        <tr><td>10</td><td>Equipo J</td><td>10</td><td>2</td><td>3</td><td>5</td><td>14</td><td>19</td><td>-5</td><td>9</td><td>-</td></tr>
+        <tr><td>11</td><td>Equipo K</td><td>10</td><td>2</td><td>2</td><td>6</td><td>12</td><td>20</td><td>-8</td><td>8</td><td>-</td></tr>
+        <tr><td>12</td><td>Equipo L</td><td>10</td><td>1</td><td>1</td><td>8</td><td>9</td><td>24</td><td>-15</td><td>4</td><td>-</td></tr>
+        <tr><td>13</td><td>Equipo M</td><td>10</td><td>3</td><td>1</td><td>6</td><td>14</td><td>21</td><td>-7</td><td>10</td><td>-</td></tr>
+        <tr><td>14</td><td>Equipo N</td><td>10</td><td>2</td><td>2</td><td>6</td><td>11</td><td>18</td><td>-7</td><td>8</td><td>-</td></tr>
+        <tr><td>15</td><td>Equipo O</td><td>10</td><td>2</td><td>2</td><td>6</td><td>10</td><td>17</td><td>-7</td><td>8</td><td>-</td></tr>
+        <tr><td>16</td><td>Equipo P</td><td>10</td><td>2</td><td>1</td><td>7</td><td>12</td><td>20</td><td>-8</td><td>7</td><td>-</td></tr>
+        <tr><td>17</td><td>Equipo Q</td><td>10</td><td>1</td><td>2</td><td>7</td><td>9</td><td>18</td><td>-9</td><td>5</td><td>-</td></tr>
+        <tr><td>18</td><td>Equipo R</td><td>10</td><td>1</td><td>1</td><td>8</td><td>7</td><td>22</td><td>-15</td><td>4</td><td>-</td></tr>
+      </tbody>
     </table>
   </section>
 
