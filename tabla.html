@@ -100,76 +100,88 @@
   </section>
 
   <footer>© <span id="y"></span> United Clubs Soccer League — Santa Ana, CA</footer>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-    function toggleMenu() {
-      document.getElementById('navLinks').classList.toggle('active');
-    }
+  // === LIVE CSV → TABLE (right-side table only) ===
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTxW6zuoPjfDDf45S2RII9krWfSpybm-QEWx5_jeF9hYF5Do2Ax-OQNVvbDv4FYlRuoyRySHFTGdgVb/pub?gid=870919127&single=true&output=csv";
 
-    // === LIVE CSV → TABLE ===
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTxW6zuoPjfDDf45S2RII9krWfSpybm-QEWx5_jeF9hYF5Do2Ax-OQNVvbDv4FYlRuoyRySHFTGdgVb/pub?gid=870919127&single=true&output=csv";
-
-    // Robust-ish CSV split (handles commas inside quotes)
-    function parseCSV(text) {
-      const rows = text.trim().split(/\r?\n/);
-      return rows.map(row => {
-        const cells = [];
-        let cur = "", inQuotes = false;
-        for (let i = 0; i < row.length; i++) {
-          const ch = row[i];
-          if (ch === '"') {
-            if (inQuotes && row[i+1] === '"') { cur += '"'; i++; }
-            else { inQuotes = !inQuotes; }
-          } else if (ch === ',' && !inQuotes) {
-            cells.push(cur); cur = "";
-          } else {
-            cur += ch;
-          }
+  // Robust-ish CSV split (handles commas inside quotes)
+  function parseCSV(text) {
+    const rows = text.trim().split(/\r?\n/);
+    return rows.map(row => {
+      const cells = [];
+      let cur = "", inQuotes = false;
+      for (let i = 0; i < row.length; i++) {
+        const ch = row[i];
+        if (ch === '"') {
+          if (inQuotes && row[i+1] === '"') { cur += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === ',' && !inQuotes) {
+          cells.push(cur); cur = "";
+        } else {
+          cur += ch;
         }
-        cells.push(cur);
-        return cells.map(c => c.trim());
-      });
-    }
-
-    async function loadStandings() {
-      const status = document.getElementById('status');
-      const container = document.getElementById('table-container');
-      const table = document.getElementById('standings-table');
-      const thead = table.querySelector('thead');
-      const tbody = table.querySelector('tbody');
-
-      try {
-        const res = await fetch(CSV_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error("No se pudo obtener el CSV");
-        const csvText = await res.text();
-        const data = parseCSV(csvText);
-
-        if (!data.length) throw new Error("CSV vacío");
-
-        // Build header
-        thead.innerHTML = "<tr>" + data[0].map(h => `<th>${h}</th>`).join("") + "</tr>";
-
-        // Build body (skip empty rows)
-        tbody.innerHTML = data.slice(1)
-          .filter(r => r.some(c => c && c.length))
-          .map(r => "<tr>" + r.map((c,i) => {
-              // Make POS bold (col 0) and Team left-aligned (col 1)
-              if (i === 0) return `<td style="font-weight:700">${c}</td>`;
-              if (i === 1) return `<td style="text-align:left; white-space:nowrap">${c}</td>`;
-              return `<td>${c}</td>`;
-            }).join("") + "</tr>")
-          .join("");
-
-        status.style.display = "none";
-        container.style.display = "block";
-      } catch (err) {
-        status.textContent = "Error cargando la tabla. Intenta de nuevo más tarde.";
-        console.error(err);
       }
-    }
+      cells.push(cur);
+      return cells.map(c => c.trim());
+    });
+  }
 
-    loadStandings();
-  </script>
+  async function loadStandings() {
+    const status = document.getElementById('status');
+    const container = document.getElementById('table-container');
+    const table = document.getElementById('standings-table');
+    const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
+
+    try {
+      const res = await fetch(CSV_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("No se pudo obtener el CSV");
+      const csvText = await res.text();
+      const all = parseCSV(csvText);
+      if (!all.length) throw new Error("CSV vacío");
+
+      // Find the start of the RIGHT table: header sequence "POS, Team, PJ, ..."
+      const header = all[0].map(h => h.toUpperCase());
+      let start = -1;
+      for (let i = 0; i < header.length - 1; i++) {
+        if (header[i] === "POS" && (header[i+1] === "TEAM" || header[i+1] === "EQUIPO")) {
+          start = i;
+          break;
+        }
+      }
+      // If not found, fallback to the last 11 columns (right block is 11 wide)
+      const width = 10; // POS, Team, PJ, G, E, P, GF, GC, DIF, PTS
+      if (start === -1) start = Math.max(0, header.length - width);
+
+      // Slice every row to only the right-hand block
+      const sliced = all.map(r => r.slice(start, start + width));
+
+      // Build header/body
+      thead.innerHTML = "<tr>" + sliced[0].map(h => `<th>${h}</th>`).join("") + "</tr>";
+      tbody.innerHTML = sliced.slice(1)
+        .filter(r => r.some(c => c && c.length))
+        .map(r => "<tr>" + r.map((c,i) => {
+          if (i === 0) return `<td style="font-weight:700">${c}</td>`; // POS bold
+          if (i === 1) return `<td style="text-align:left; white-space:nowrap">${c}</td>`; // Team left
+          return `<td>${c}</td>`;
+        }).join("") + "</tr>")
+        .join("");
+
+      status.style.display = "none";
+      container.style.display = "block";
+    } catch (err) {
+      status.textContent = "Error cargando la tabla. Intenta de nuevo más tarde.";
+      console.error(err);
+    }
+  }
+
+  loadStandings();
+</script>
 </body>
 </html>
+
