@@ -163,16 +163,7 @@
                 <th>POS</th><th>EQUIPO</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>PTS</th>
               </tr>
             </thead>
-            <tbody>
-              <tr><td>1</td><td>Equipo A</td><td>10</td><td>8</td><td>1</td><td>1</td><td>25</td></tr>
-              <tr><td>2</td><td>Equipo B</td><td>10</td><td>7</td><td>2</td><td>1</td><td>23</td></tr>
-              <tr><td>3</td><td>Equipo C</td><td>10</td><td>6</td><td>2</td><td>2</td><td>20</td></tr>
-              <tr><td>4</td><td>Equipo D</td><td>10</td><td>6</td><td>1</td><td>3</td><td>19</td></tr>
-              <tr><td>5</td><td>Equipo E</td><td>10</td><td>5</td><td>2</td><td>3</td><td>17</td></tr>
-              <tr><td>6</td><td>Equipo F</td><td>10</td><td>5</td><td>1</td><td>4</td><td>16</td></tr>
-              <tr><td>7</td><td>Equipo G</td><td>10</td><td>4</td><td>2</td><td>4</td><td>14</td></tr>
-              <tr><td>8</td><td>Equipo H</td><td>10</td><td>3</td><td>3</td><td>4</td><td>12</td></tr>
-            </tbody>
+            <tbody id="top8"></tbody>
           </table>
         </div>
       </div>
@@ -200,6 +191,78 @@
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
     function toggleMenu(){ document.getElementById('navLinks').classList.toggle('active'); }
+
+    // === Pull Top 8 from the live Standings CSV (right-hand sorted table, no H2H) ===
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTxW6zuoPjfDDf45S2RII9krWfSpybm-QEWx5_jeF9hYF5Do2Ax-OQNVvbDv4FYlRuoyRySHFTGdgVb/pub?gid=870919127&single=true&output=csv";
+
+    // CSV parser that handles quoted commas
+    function parseCSV(text) {
+      const rows = text.trim().split(/\r?\n/);
+      return rows.map(row => {
+        const cells = [];
+        let cur = "", inQuotes = false;
+        for (let i = 0; i < row.length; i++) {
+          const ch = row[i];
+          if (ch === '"') {
+            if (inQuotes && row[i+1] === '"') { cur += '"'; i++; }
+            else { inQuotes = !inQuotes; }
+          } else if (ch === ',' && !inQuotes) {
+            cells.push(cur); cur = "";
+          } else {
+            cur += ch;
+          }
+        }
+        cells.push(cur);
+        return cells.map(c => c.trim());
+      });
+    }
+
+    async function loadTop8() {
+      try {
+        const res = await fetch(CSV_URL, { cache: "no-store" });
+        const text = await res.text();
+        const all = parseCSV(text);
+        if (!all.length) return;
+
+        // Find right-hand table header start: POS + Team/Equipo
+        const header = all[0].map(h => h.toUpperCase());
+        let start = -1;
+        for (let i = 0; i < header.length - 1; i++) {
+          if (header[i] === "POS" && (header[i+1] === "TEAM" || header[i+1] === "EQUIPO")) { start = i; break; }
+        }
+
+        // We want 10 columns: POS, Team, PJ, G, E, P, GF, GC, DIF, PTS (no H2H)
+        const width = 10;
+        if (start === -1) start = Math.max(0, header.length - width);
+
+        // Take rows (skip header), slice to right block, take top 8
+        const rows = all.slice(1)
+          .map(r => r.slice(start, start + width))
+          .filter(r => r.some(c => c && c.length))
+          .slice(0, 8);
+
+        // Build Top-8 rows for the glass card (POS, EQUIPO, PJ, G, E, P, PTS)
+        const tbody = document.getElementById("top8");
+        tbody.innerHTML = rows.map(r => {
+          const POS = r[0], TEAM = r[1], PJ = r[2], G = r[3], E = r[4], P = r[5], PTS = r[9];
+          return `
+            <tr class="hover:bg-white/10">
+              <td style="text-align:center;font-weight:700">${POS}</td>
+              <td style="text-align:left;white-space:nowrap">${TEAM}</td>
+              <td style="text-align:center">${PJ}</td>
+              <td style="text-align:center">${G}</td>
+              <td style="text-align:center">${E}</td>
+              <td style="text-align:center">${P}</td>
+              <td style="text-align:center">${PTS}</td>
+            </tr>
+          `;
+        }).join("");
+      } catch (e) {
+        console.error("Top8 load error:", e);
+      }
+    }
+
+    loadTop8();
   </script>
 </body>
 </html>
