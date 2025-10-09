@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script src="data/standings.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tabla General — United Clubs Soccer League</title>
@@ -94,7 +95,7 @@
     <div id="table-container" style="display:none; overflow-x:auto;">
       <table id="standings-table" aria-label="Tabla General">
         <thead></thead>
-        <tbody></tbody>
+        <tbody id="full-standings-body"></tbody>
       </table>
     </div>
   </section>
@@ -182,6 +183,38 @@
 
   loadStandings();
 </script>
+  <script>
+  (function () {
+    const rows = (window.STANDINGS && window.STANDINGS.rows) ? window.STANDINGS.rows : [];
+    const tbody = document.getElementById('full-standings-body');
+    if (!tbody) return;
+
+    rows.forEach((r, idx) => {
+      const tr = document.createElement('tr');
+      const cells = [
+        (idx + 1), // POS
+        r.Team,
+        r.PJ,
+        r.G,
+        r.E,
+        r.P,
+        r.GF,
+        r.GC,
+        r.DIF,
+        r.PTS,
+        r.RealPTS ?? '-' // if you don’t track “PTS Reales”, fallback to a dash
+      ];
+      cells.forEach((c, i) => {
+        const td = document.createElement('td');
+        td.textContent = c;
+        if (i === 1) td.style.textAlign = 'left';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+</script>
 </body>
 </html>
+
 
